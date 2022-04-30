@@ -1,5 +1,6 @@
 from vector import *
 
+epsilon = 0.0001
 
 class Line3d:
     """https://math.stackexchange.com/questions/404440/what-is-the-equation-for-a-3d-line"""
@@ -79,8 +80,18 @@ class FiniteLine3d():
         if not isinstance(vector1, Vector3d): vector1 = Vector3d(*vector1)
         if not isinstance(vector2, Vector3d): vector2 = Vector3d(*vector2)
         direction = vector2 - vector1
-        return cls(vector1, direction, vector1 + vector1 + direction * length)        
+        return cls(vector1, direction, vector1 + vector1 + direction * length)    
 
+    def __and__(self, other):
+        """ Intersection"""
+        other_type = type(other).__name__
+        if other_type == "Vector3d" or other_type == "Vector2d":
+            AP = other - self.line.point
+            if not self.direction.cross(AP): return 0
+            else:
+                if abs(abs(AP) + abs(self.end - other) - self.length) < epsilon:
+                    return other
+            
 
 
 
