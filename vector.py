@@ -28,6 +28,7 @@ class Vector2d:
         else: raise TypeError(f"Unsupported operation between Vector2 and {type(other).__name__}")
 
     def __mul__(self, other):
+        """ Dot product """
         if isinstance(other, (Vector2d, Vector3d)):
             return self.x * other.x + self.y * other.y
         elif isinstance(other, tuple):
@@ -37,6 +38,7 @@ class Vector2d:
         else: raise TypeError(f"Unsupported operation between Vector2 and {type(other).__name__}")
 
     def __pow__(self, other):
+        """ Element wise multiplication"""
         if isinstance(other, Vector2d):
             return Vector2d(self.x * other.x, self.y * other.y)
         elif isinstance(other, Vector3d):
@@ -71,6 +73,7 @@ class Vector2d:
         return f"Vector2({self.x:.2f},{self.y:.2f})"
 
     def dist(self, other):
+        """ Distance between points"""
         if isinstance(other, Vector2d):
             return ((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5 
         elif isinstance(other, Vector3d):
@@ -78,6 +81,7 @@ class Vector2d:
         else: raise TypeError(f"Unsupported operation between Vector2 and {type(other).__name__}")
 
     def cross(self, other):
+        """ Cross product"""
         if isinstance(other, Vector3d):
             return Vector3d(self.y * other.z,- self.x * other.z, self.x * other.y - self.y * other.x)
         elif isinstance(other, Vector2d):
@@ -133,6 +137,7 @@ class Vector3d:
         else: return NotImplemented
 
     def __mul__(self, other):
+        """ Dot product"""
         if isinstance(other, Vector3d):
             return self.x * other.x + self.y * other.y + self.z * other.z
         if isinstance(other, Vector2d):
@@ -145,6 +150,7 @@ class Vector3d:
         else: raise TypeError(f"Unsupported operation between Vector3 and {type(other).__name__}")
 
     def __pow__(self, other):
+        """ Element wise multiplication"""
         if isinstance(other, Vector3d):
             return Vector3d(self.x * other.x, self.y * other.y, self.z * other.z)
         elif isinstance(other, Vector2d):
@@ -180,6 +186,7 @@ class Vector3d:
         return f"Vector3d({self.x:.2f},{self.y:.2f},{self.z:.2f})"
 
     def dist(self, other):
+        """Distance between points"""
         if isinstance(other, Vector3d):
             return ((self.x - other.x) ** 2 + (self.y - other.y) ** 2 + (self.z - other.z) ** 2) ** 0.5 
         elif isinstance(other, Vector2d):
@@ -187,6 +194,7 @@ class Vector3d:
         else: raise TypeError(f"Unsupported operation between Vector3 and {type(other).__name__}")
 
     def cross(self, other):
+        """ Cross Product"""
         if isinstance(other, Vector3d):
             return Vector3d(self.y * other.z - self.z * other.y, self.z * other.x - self.x * other.z, self.x * other.y - self.y * other.x)
         elif isinstance(other, Vector2d):

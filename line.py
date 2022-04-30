@@ -15,6 +15,7 @@ class Line3d:
 
     @classmethod
     def from_parameters(cls, x_p, y_p, z_p):
+        """ x = x0 + at, y = y0 + at, z = z0 + at, """
         return cls((x_p[0],y_p[0],z_p[0]), (x_p[1],y_p[1],z_p[1]))
 
     def __matmul__(self, other, degree = True):
@@ -24,6 +25,7 @@ class Line3d:
         else: return math.asin(abs(self.direction.cross(other.direction)) / (abs(self.direction) * abs(other.direction)))
 
     def __floordiv__(self, other):
+        """ Check parallel"""
         if not isinstance(other, Line3d): return NotImplemented
         return not abs(self.direction.cross(other.direction))
 
@@ -34,6 +36,7 @@ class Line3d:
             return NotImplemented
 
     def __sub__(self, other):
+        """ Distance"""
         if not isinstance(other, (Vector3d, Vector2d, tuple)): return NotImplemented
         return abs((other - self.point).cross(self.direction)) / abs(self.direction)
 
