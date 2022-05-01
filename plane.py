@@ -41,21 +41,19 @@ class Plane:
 
     def __sub__(self, other):
         """ Distance between """
-        other_type = type(other).__name__
-        if other_type == "Vector2d" or other_type == "Vector3d":
+        if isinstance(other, (Vector3d, Vector2d)):
             return abs(self.normal.direction * other - self.d) / abs(self.normal.direction)
-        elif other_type == "Line3d" or other_type == "Line2d":
+        elif isinstance(other, Line3d):
             if not self // other: return 0
             else: return self - other.point
-        elif other_type == "Plane":
+        elif isinstance(other, Plane):
             if not self // other: return 0
             else: return abs(self.d - other.d * self.normal.direction.x / other.normal.direction.x) / abs(self.normal.direction)
         else: return NotImplemented
 
     def __and__(self, other):
         """ Intersection """
-        other_type = type(other).__name__
-        if other_type == "Plane":
+        if isinstance(other, Plane):
             if self.normal // other.normal: return 0
             a1, b1, c1, d1 = *self.normal.direction, self.d
             a2, b2, c2, d2 = *other.normal.direction, other.d
@@ -72,10 +70,10 @@ class Plane:
 
             return Line3d(point, direction)
 
-        elif other_type == "Vector3d" or other_type == "Vector2d":
+        elif isinstance(other, (Vector3d, Vector2d)):
             return not other * self.normal.direction - self.d
 
-        elif other_type == "Line3d" or other_type == "Line2d":
+        elif isinstance(other, Line3d):
             if self // other:
                 if not self - other: return other
                 else: return 0
